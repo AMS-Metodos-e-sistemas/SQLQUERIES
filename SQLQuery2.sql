@@ -1,18 +1,18 @@
 -----------
 WITH TABELACUSTO(c_pro,preco1,preco2,preco3,preco4,preco5) as 
-(Select c_pro, 
+(Select c_pro, -- incluido comentario
 isnull((Select top 1 ec_mat.preco_m from ec_mat 
 inner join ec_notc on ec_notc.c_enotc = ec_mat.c_enotc 
 inner join ntop on ntop.c_ntop = ec_notc.c_ntop 
 where ec_mat.c_pro = pro.c_pro and ec_mat.preco_m > 0  and ec_notc.para = 'Fornecedor' and ec_notc.liberado = 1 and ntop.financeiro = 1 
-order by ec_notc.demi desc),0) as preco_1, -- Preço 1
+order by ec_notc.demi desc),0) as preco_1, -- PreÃ§o 1
 -- corte = 1
 -----------
 isnull((Select top 1 convert(numeric(13,2),(ec_mat.V_Total - ec_mat.vicms) /ec_mat.e_quant) from ec_mat 
 inner join ec_notc on ec_notc.c_enotc = ec_mat.c_enotc 
 inner join ntop on ntop.c_ntop = ec_notc.c_ntop 
 where ec_mat.c_pro = pro.c_pro and ec_notc.c_ntop <> '00011' and ec_notc.stat = '100' and ec_mat.e_quant > 0 and ec_mat.preco_m = 0  and ec_notc.para = 'Fornecedor' and ec_notc.liberado = 1 and ntop.financeiro = 1 
-order by ec_notc.demi desc),0) as preco_2, -- Preço 2 
+order by ec_notc.demi desc),0) as preco_2, -- PreÃ§o 2 
 -- 
 -----------
 isnull((Select top 1 convert(numeric(13,2),(ec_mat.V_Total - ec_mat.vicms) / 
@@ -21,7 +21,7 @@ isnull((Select top 1 convert(numeric(13,2),(ec_mat.V_Total - ec_mat.vicms) /
 inner join ec_notc on ec_notc.c_enotc = ec_mat.c_enotc 
 inner join ntop on ntop.c_ntop = ec_notc.c_ntop 
 where ec_mat.c_pro = pro.c_pro and ec_notc.c_ntop <> '00011' and ec_notc.stat = '100' and ec_mat.e_quant > 0 and ec_mat.preco_m = 0  and ec_notc.para = 'Fornecedor' and ec_notc.liberado = 1 and ntop.financeiro = 1 
-order by ec_notc.demi desc),0) as preco_3, -- Preço 3 
+order by ec_notc.demi desc),0) as preco_3, -- PreÃ§o 3 
 ----------
 isnull((Select top 1 
 CASE WHEN PRO.CORTE = 1 
@@ -34,9 +34,9 @@ from notc
 inner join inv on inv.c_prog = notc.c_prog 
 inner join ntop on ntop.c_ntop = notc.c_ntop 
 where inv.c_pro = pro.c_pro and notc.tipo = 'N' and ntop.financeiro = 1 and notc.conf=1 
-order by notc.demi desc),0) as preco_4, -- Preço 4 
+order by notc.demi desc),0) as preco_4, -- PreÃ§o 4 
 ------------
-isnull(pro.custo,0) as preco_5 -- Preço 5
+isnull(pro.custo,0) as preco_5 -- PreÃ§o 5
 ------------
 from pro 
 where exists 
